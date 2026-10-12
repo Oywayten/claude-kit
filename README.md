@@ -37,7 +37,14 @@ bash install.sh --with-rag # то же + база pgvector и MCP-сервер (
 
 ## RAG
 
-`bash install.sh --with-rag` кладёт код в `~/claude-rag`, поднимает `rag-postgres` (pgvector), собирает образ `mcp-rag-pgvector` и регистрирует MCP `pgvector-rag` через `claude mcp add`. База пустая: свои документы индексируй по `~/claude-rag/README.md` (`python index.py`). Первый запуск скачивает модель BAAI/bge-m3 (около 2 ГБ).
+`bash install.sh --with-rag` кладёт код в `~/claude-rag`, поднимает `rag-postgres` (pgvector), собирает образ `mcp-rag-pgvector` и регистрирует MCP `pgvector-rag` через `claude mcp add`. База пустая.
+
+Модель `BAAI/bge-m3` нужна для эмбеддингов (индексация и поиск), сам чанкинг идёт по заголовкам и длине текста, без модели. Модель качается с HuggingFace сама при первом обращении, около 2 ГБ, и лежит в `~/.cache/huggingface`. Её качают два разных процесса:
+
+- MCP-контейнер: при первом поиске. Папка кэша примонтирована в контейнер, поэтому повторно не качается.
+- `python index.py` на хосте: при первой индексации. Нужны venv и `pip install -r requirements.txt` (torch, docling), как в `~/claude-rag/README.md`. Ставит их не `install.sh`, а ты вручную.
+
+Свои документы клади в `~/claude-rag/input_material/` и запускай `python index.py`.
 Пароль БД `postgres/postgres` годится только для локального запуска.
 
 ## Проверка после установки

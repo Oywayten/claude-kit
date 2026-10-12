@@ -47,8 +47,13 @@ if [ "$WITH_RAG" = 1 ]; then
   mkdir -p "$RAG_DIR"; cp -r "$KIT"/rag/. "$RAG_DIR"/
   command -v docker >/dev/null 2>&1 || { echo "Для RAG нужен docker." >&2; exit 1; }
   ( cd "$RAG_DIR" && docker compose up -d && docker build -t mcp-rag-pgvector mcp-rag-server )
+  # кэш модели на хосте: контейнер с --rm иначе скачивал бы модель при каждом запуске
+  HF_CACHE="$HOME/.cache/huggingface"
+  mkdir -p "$HF_CACHE"
+  if command -v cygpath >/dev/null 2>&1; then HF_CACHE="$(cygpath -m "$HF_CACHE")"; fi
   if command -v claude >/dev/null 2>&1; then
     claude mcp add --scope user pgvector-rag -- docker run -i --rm --network rag-network \
+      -v "$HF_CACHE:/root/.cache/huggingface" \
       -e DATABASE_URL=postgresql://postgres:postgres@postgres:5432/rag_docs \
       -e EMBED_MODEL=BAAI/bge-m3 -e TOP_K_DEFAULT=5 -e LOG_LEVEL=INFO mcp-rag-pgvector
   else
