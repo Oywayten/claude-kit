@@ -41,12 +41,12 @@ DB_NAME = os.getenv("DB_NAME", "rag_docs")
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
 MODEL_NAME = os.getenv("EMBED_MODEL", "BAAI/bge-m3")
-INPUT_DIR = os.getenv("INPUT_DIR", r"D:\projects\4j\job4j_questions\07_system_design\03_my_system_design_prepare\input_material")
+INPUT_DIR = os.getenv("INPUT_DIR", "./input_material")
 
 # Каталог кэша переводов: для EN-файлов индексируем готовый RU-перевод.
 # Файл кэша называется {content_hash(исходного файла)}.ru.md, где hash — тот же sha256,
 # что возвращает content_hash() (см. ниже).
-TRANSLATIONS_DIR = os.getenv("TRANSLATIONS_DIR", r"D:\projects\aider_desk_rag\rag-project\translations_cache")
+TRANSLATIONS_DIR = os.getenv("TRANSLATIONS_DIR", "./translations_cache")
 
 # Число потоков для docling (конвертация PDF). Дефолт 2 — ограничиваем потоки,
 # чтобы снизить пиковое потребление RAM (защита от std::bad_alloc на больших PDF).

@@ -218,8 +218,8 @@ python index.py --rebuild-embeddings
 | `DB_USER` | Пользователь PostgreSQL | `postgres` | `DB_USER=postgres` | строка |
 | `DB_PASSWORD` | Пароль PostgreSQL | `postgres` | `DB_PASSWORD=secret` | строка |
 | `EMBED_MODEL` | Модель sentence-transformers для эмбеддингов. Размерность должна совпадать с `VECTOR(1024)` в `init.sql` | `BAAI/bge-m3` | `EMBED_MODEL=BAAI/bge-m3` | любая модель ST с размерностью 1024 |
-| `INPUT_DIR` | Каталог с индексируемыми MD/PDF-файлами | `D:\projects\4j\job4j_questions\07_system_design\03_my_system_design_prepare\input_material` | `INPUT_DIR=input_material` | путь к каталогу |
-| `TRANSLATIONS_DIR` | Каталог кэша RU-переводов EN-файлов (файл `{content_hash}.ru.md`) | `D:\projects\aider_desk_rag\rag-project\translations_cache` | `TRANSLATIONS_DIR=translations_cache` | путь к каталогу |
+| `INPUT_DIR` | Каталог с индексируемыми MD/PDF-файлами | `./input_material` | `INPUT_DIR=input_material` | путь к каталогу |
+| `TRANSLATIONS_DIR` | Каталог кэша RU-переводов EN-файлов (файл `{content_hash}.ru.md`) | `./translations_cache` | `TRANSLATIONS_DIR=translations_cache` | путь к каталогу |
 | `AUTO_TRANSLATE` | Авто-перевод EN-MD-файлов перед индексацией | `1` (включён) | `AUTO_TRANSLATE=0` | `1` / `0` / `false` / `no` / пусто (выкл.) |
 | `LOG_LEVEL` | Уровень логирования | `INFO` | `LOG_LEVEL=DEBUG` | `DEBUG` / `INFO` / `WARNING` / `ERROR` / `CRITICAL` |
 | `DOCLING_NUM_THREADS` | Число потоков docling при конвертации PDF (передаётся в `AcceleratorOptions(num_threads=...)`) | `2` | `DOCLING_NUM_THREADS=2` | 1..число ядер CPU (≥1) |
