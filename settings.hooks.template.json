@@ -1,0 +1,182 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/stage_context.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/handoff_hint.py\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Сессия началась, возобновлена или контекст только что сжат: прежние скиллы выгружены. До первого ответа и до любого другого инструмента: 1) вызови через инструмент Skill скилл oh-my-god (Evidence Rule) и держи его правила в силе всю сессию. 2) Вызови скилл caveman с аргументом ultra и используй этот стиль во всех последующих ответах до конца сессии. Отвечай только на русском языке.\"}}'",
+            "shell": "bash"
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/memory_cleanup_reminder.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/handoff_start.py\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/skills_loaded_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/commit_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/git_state_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/git_state_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/java_edit_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/analysis_script_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/check_steps_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/stage_format_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell|Read|Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/source_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__pgvector-rag__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/rag_guard.py\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/skills_loaded_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/stage_record_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/absence_claim_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/index_coverage_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/unexplained_label_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/promise_wakeup_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/context_handoff_guard.py\""
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/memory_index_guard.py\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/mermaid_render_guard.py\"",
+            "timeout": 180
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/doc_fact_guard.py\"",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/memory_size_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__pgvector-rag__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "@PY@ \"@HOOKS@/rag_guard.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    container_name: rag-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: rag_docs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - rag-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rag_docs"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+networks:
+  rag-network:
+    name: rag-network
+    driver: bridge
+
+volumes:
+  pgdata:
