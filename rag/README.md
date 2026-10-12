@@ -243,7 +243,7 @@ python index.py --rebuild-embeddings
 
 | Переменная | На что влияет | Дефолт | Пример | Диапазон возможных значений |
 |---|---|---|---|---|
-| `TRANSLATION_MODEL_DIR` | Каталог модели перевода NLLB (`translate_files.py`) | `eval/model_nllb` | `TRANSLATION_MODEL_DIR=D:\models\nllb` | путь к каталогу |
+| `TRANSLATION_MODEL_DIR` | Каталог модели перевода NLLB (`translate_files.py`) | `eval/model_nllb` | `TRANSLATION_MODEL_DIR=./models/nllb` | путь к каталогу |
 | `LIMIT` | Ограничение числа обрабатываемых файлов при переводе — тестовый «рубильник» (`translate_files.py`) | `0` (без ограничения) | `LIMIT=5` | целое ≥0 |
 | `DATABASE_URL` | DSN PostgreSQL для eval-скриптов (`measure_baseline.py`, `backfill_lang.py`) | `postgresql://postgres:postgres@localhost:5432/rag_docs` | `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rag_docs` | строка DSN |
 | `EMBED_MODEL` | Модель эмбеддингов в `measure_baseline.py` | `BAAI/bge-m3` | `EMBED_MODEL=BAAI/bge-m3` | любая модель ST с размерностью 1024 |
