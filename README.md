@@ -5,6 +5,8 @@
 ## Установка
 
 ```bash
+git clone https://github.com/Oywayten/claude-kit.git
+cd claude-kit
 bash install.sh            # хуки, скиллы, команды, агенты
 bash install.sh --with-rag # то же + база pgvector и MCP-сервер (нужен docker)
 ```
